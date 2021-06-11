@@ -1,0 +1,12 @@
+<html>
+<body>
+<ul>
+    #foreach($item in $items)
+        <li>
+            <p>$item</p>
+            <a href="$item"/>
+        <li>
+    #end
+</ul>
+</body>
+</html>
