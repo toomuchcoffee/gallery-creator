@@ -1,15 +1,13 @@
 package de.toomuchcoffee.gallerycreator;
 
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
@@ -32,7 +30,16 @@ public class Main {
         VelocityContext context = new VelocityContext();
         context.put("items", paths);
 
-        Velocity.mergeTemplate(templateName, UTF_8.name(), context, new FileWriter("out.html"));
+        VelocityEngine ve = new VelocityEngine();
+        ve.init();
+
+        StringWriter stringWriter = new StringWriter();
+        InputStreamReader reader = new InputStreamReader(new FileInputStream(templateName));
+        ve.evaluate(context, stringWriter, "output", reader);
+
+        PrintWriter printWriter = new PrintWriter(new FileWriter("out.html"));
+        printWriter.print(stringWriter.toString());
+        printWriter.close();
     }
 
 }
