@@ -11,6 +11,8 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
+    public static final String DEFAULT_OUTPUT_FILE = "out.html";
+
     public static void main(String[] args) throws IOException {
         String currentDir = System.getProperty("user.dir");
 
@@ -37,7 +39,7 @@ public class Main {
         InputStreamReader reader = new InputStreamReader(new FileInputStream(templateName));
         ve.evaluate(context, stringWriter, "output", reader);
 
-        PrintWriter printWriter = new PrintWriter(new FileWriter("out.html"));
+        PrintWriter printWriter = new PrintWriter(new FileWriter(DEFAULT_OUTPUT_FILE));
         printWriter.print(stringWriter.toString());
         printWriter.close();
     }
